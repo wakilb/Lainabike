@@ -24,6 +24,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		$query.= "'" .db_escape($db, $Id). "'";
 		$query.= "LIMIT 1";
 		$result=mysqli_query($db,$query);
+		
+		
+		//I have problem here: I want to delete the record from the child table if it exist 
+		$query2= "DELETE FROM admins ";
+		$query2 .= "WHERE Id= ";
+		$query2 .= "'" .db_escape($db, $Id). "'";
+		$query2 .= "LIMIT 1";
+		$result2=mysqli_query($db,$query2);
+		
+		
 		if($result){
 			$toggle="hidden";
 			$text="User deleted with succes !";

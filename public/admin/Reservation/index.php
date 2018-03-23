@@ -5,17 +5,14 @@
 <!--Bring the MarkUp (HTML) for the header-->
 <?php include('../../../private/shared/admin_header.php') ?>
 
-<!--
-Simulate the Database 
--->
+
 <?php
 	
+	//Need desition if we list all the records or some spesific ones
+	$sql = "SELECT * FROM reservations ";
+  	$sql .= "ORDER BY Id ASC"; 
+  	$reservations_result = mysqli_query($db , $sql);
 	
-	$reservations = [
-		['UserID' => '1' , 'BikeID' => '1' , 'Date' => '24/10/2017' , 'Number' => '1'] ,
-		['UserID' => '2' , 'BikeID' => '2' , 'Date' => '21/10/2017' , 'Number' => '3'] ,
-		['UserID' => '3' , 'BikeID' => '3' , 'Date' => '22/10/2017' , 'Number' => '2'] 
-	];
 ?>
 
 
@@ -28,10 +25,10 @@ Simulate the Database
 				<th>Date</th>
 				<th>Number</th>
 			</tr>
-			<?php foreach ($reservations as $reservation) { ?>
+			<?php while($reservation=mysqli_fetch_assoc($reservations_result)) { ?>
 			<tr>
-				<td><?php echo u($reservation['UserID']); ?></td>
-				<td><?php echo u($reservation['BikeID']); ?></td>
+				<td><?php echo u($reservation['User_Id']); ?></td>
+				<td><?php echo u($reservation['Bike_Id']); ?></td>
 				<td><?php echo u($reservation['Date']); ?></td>
 				<td><?php echo u($reservation['Number']); ?></td>
 			</tr>

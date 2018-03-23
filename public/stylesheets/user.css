@@ -1,0 +1,39 @@
+body{
+	background-color: #E1E5F2;
+	color: #022B3A;
+/*	width: auto;
+	height: auto;
+	margin: 10px 20%;*/
+}
+
+.navbar-brand{
+	margin: 0;
+	padding: 0;
+}
+
+header{
+	margin: 0;
+}
+header img {
+	display: block;
+	margin: auto;
+}
+
+.login_form{
+	border: 1px solid #1F7A8C;
+	padding: 10px 15px;
+}
+
+.errors {
+  display: inline-block;
+  border: 2px solid red;
+  color: red;
+  padding: 1em;
+  margin-bottom: 1em;
+	align-content: center;
+}
+
+.errors ul {
+  margin-bottom: 0;
+  padding-left: 1em;
+}

@@ -26,13 +26,13 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST'){
 }
 ?>
 
-	  <h2>Rent a Bike</h2>
-
-	<table class="list">
+<h2>Rent a Bike</h2>
+<div class="table-responsive">
+	<table class="table table-hover table-bordered">
 		
       <?php if (isset ($query2)){ ?>
 		<tr>
-			<th>Bike ID</th>
+			<th hidden="hidden">Bike ID</th>
 			<th>Type</th>
 			<th>Size</th>
 			<th>Location</th>
@@ -45,24 +45,27 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST'){
 	
 		<?php while($bike = mysqli_fetch_assoc($result)) { ?>
         <tr>
-          <td><?php echo u($bike['Id']); ?></td>
+          <td hidden="hidden"><?php echo u($bike['Id']); ?></td>
           <td><?php echo u($bike['Model']); ?></td>
 		  <td><?php echo u($bike['Size']); ?></td>
 		  <td><?php echo u($bike['Location']); ?></td>
           <td><?php echo $bike['Availability'] == 'yes' ? 'Available' : 'Not avilable'; ?></td>
 		  <td><?php echo u($bike['Public_Id']); ?></td>
 		  <td><?php echo u($bike['Photo']); ?></td>
-          <td><a class="action" href="<?php echo url_for('/user/book.php?Id='.h(u($bike['Id']))); ?>">Book</a></td>
+          <td>
+			  <a class="btn btn-primary" href="<?php echo url_for('/user/book.php?Id='.h(u($bike['Id']))); ?>" aria-label="Book"><i class="fa fa-check" aria-hidden="true">Book</i></a>
+			</td>
     	</tr>
       <?php } }?>
   	</table>
+</div>
 
  <?php if (!isset ($query2)){ ?>
 	  <form action="<?php echo url_for("user/index.php") ?>" method="post">
 		  <dl>
-			  <dt>Bike model: </dt>
+			  <dt><label for="BikeModel">Bike model: </label></dt>
 			  <dd>
-				  <select name="BikeModel">
+				  <select class="form-control" name="BikeModel" id="BikeModel">
 					  <?php
 					    while ($bike_model= mysqli_fetch_assoc($result)){
 							echo ("<option value=" . $bike_model['Model'] . ">" . $bike_model['Model'] . "</option>");
@@ -74,15 +77,15 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST'){
 			  </dd>
 		  </dl>
 		  <dl>
-			  <dt>Bike size: </dt>
+			  <dt><label for="size">Bike size: </label></dt>
 			  <dd>
-				  <input type="number" name="size" min="49" max="59" >
+				  <input class="form-control" type="number" name="size" id="size" min="49" max="59" >
 			  </dd>
 		  </dl>
 		  <dl>
-			  <dt>Bike Location: </dt>
+			  <dt><label for="BikeLocation">Bike Location: </label></dt>
 			  <dd>
-				  <select name="BikeLocation">
+				  <select class="form-control" name="BikeLocation" id="BikeLocation">
 					  <?php
 					    while ($bike_location= mysqli_fetch_assoc($result2)){
 							echo ("<option value=" . $bike_location['Location'] . ">" . $bike_location['Location'] . "</option>");
@@ -93,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST'){
 				  </select>
 			  </dd>
 		  </dl>
-		  <input name="search" type="submit" value="search">
+		  <input name="search" type="submit" value="search" class="btn btn-primary btn-lg btn-block">
 	  </form>
  <?php } ?>
 

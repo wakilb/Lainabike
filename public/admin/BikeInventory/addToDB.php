@@ -46,7 +46,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$result = mysqli_query($db, $query);	
 	
 	
-		echo ("<h1 id='message'>Bike added with success ! </h1><br>" );
+		echo ("<h2 id='message'>Bike added with success ! </h2><br>" );
 		echo ("Type: " . $type . "<br>");
 		echo ("Size: " . $size . "<br>");
 		echo ("Location: " . $location . "<br>");

@@ -1,6 +1,8 @@
 <?php require_once("../../Private/initialize.php") ?>
 
 <?php 
+	
+require_once('../../private/shared/user_header.php');
 
 if(!isset($_GET['reservationId'])){
 	header("Location: ". url_for("user/reservation.php"));
@@ -8,9 +10,10 @@ if(!isset($_GET['reservationId'])){
 
 
 $SubmitToggle= null;
+$message="";
 if(isset($_POST['status'])){
 	if($_POST['status'] == 0 ){
-		echo("You must give a feadback !");
+		$message="<p class=\"text-warning\">You must give a feadback ! </p>";
 	}elseif ($_POST['status'] == 1 ) {
 		//Update the status of the reservation 
 		$reservationId= $_GET['reservationId'];
@@ -21,8 +24,8 @@ if(isset($_POST['status'])){
 		mysqli_query($db, $query);
 		//Update the page assets
 		$SubmitToggle="disabled";
-		echo("Good feadback! <br>the resrvation with Id : " . $_GET['reservationId']. " Is activated now ! Enjoy");
-		echo("<br> you will be redirected to the reservation page ");
+		$message = "<p class=\"text-success\"> Good feadback! <br>the resrvation with Id : " . $_GET['reservationId']. " Is activated now ! Enjoy";
+		$message .= "<br> you will be redirected to the reservation page </p> ";
 		header("refresh:5 ; url=".url_for("user/reservation.php"));
 		
 		
@@ -46,8 +49,8 @@ if(isset($_POST['status'])){
 		mysqli_query($db, $query);
 		//Update the page assets
 		$SubmitToggle="disabled";
-		echo(" Bad feadback! <br>the resrvation with Id : " . $_GET['reservationId']. " Is Deleted now ! Please go back and choose another bike");
-		echo("<br> you will be redirected to the rent page ");
+		$message =" <p class=\"text-danger\"> Bad feadback! <br>the resrvation with Id : " . $_GET['reservationId']. " Is Deleted now ! Please go back and choose another bike";
+		$message .="<br> you will be redirected to the rent page <p> ";
 		header("refresh:5 ; url=".url_for("user/index.php"));
 		
 
@@ -69,5 +72,9 @@ if(isset($_POST['status'])){
 			$reservationInSpot= $_GET['reservationId'];
 		}
 	?>
-	<input type="submit" name="confirme" value="confirme" <?php echo($SubmitToggle); ?>  >
+	<input class="btn btn-primary" type="submit" name="confirme" value="confirme" <?php echo($SubmitToggle); ?>  >
+	<?php if($message !== "") echo $message; ?>
 </form>
+
+
+<?php require_once('../../private/shared/user_footer.php'); ?>

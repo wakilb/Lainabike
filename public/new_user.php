@@ -1,6 +1,10 @@
 <?php require_once("../Private/initialize.php") ?>
 
+<?php include_once("../Private/shared/inout_header.php") ?>
+
 <?php
+	
+	$toggle="";
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$name = isset($_POST['Name']) ? $_POST['Name'] : null;
@@ -29,17 +33,28 @@ $validationResult=new_user_validation($newUser);
 
 
 if(empty($validationResult)){
-
+	
+	//Password Encryption
+	$HashedPassword = password_hash($password , PASSWORD_BCRYPT);
+	
+	
+	
 	$query = "INSERT INTO users " ;
-	$query .= "(Name, Email, Password, Feedback) ";
+	$query .= "(Name, Email, HashedPassword, Feedback) ";
 	$query .= "VALUES (";
 	$query .= "'" . db_escape($db, $name) . "', ";
 	$query .= "'" . db_escape($db, $email) . "', ";
-	$query .= "'" . db_escape($db, $password) . "', ";
+	$query .= "'" . db_escape($db, $HashedPassword) . "', ";
 	$query .= "'0' )";
 	$result = mysqli_query($db, $query);
-	
-	$message="user enregistred withh succes ! ";
+
+	if($result){
+		$toggle="hidden";
+		$message="user enregistred withh succes ! ";
+		header("refresh:3 ; url=".url_for("index.php"));
+	}
+	else
+		$message="There is a problem please contact the site owner ";
 }else{
 	//var_dump($validationResult);
 }
@@ -50,17 +65,12 @@ if(empty($validationResult)){
 
 
 ?>
-<!DOCTYPE html>
-<html>
-	<head>
-		
-	</head>
-	<body>
+
 		<h1>Sing Up</h1>
 		<p>Welcome to LainaBike, Please enter your information bellow to enregister!</p>
 		<?php echo display_errors($validationResult) ?>
 		<?php if(isset($message))echo ("<div class=\"ok\">" . $message . "</div>") ?>
-		<form action="<?php echo(url_for("new_user.php")) ?>" method="post">
+		<form action="<?php echo(url_for("new_user.php")) ?>" method="post" <?php echo $toggle; ?>>
 			<dl>
 				<dt>Name: </dt>
 				<dd><input name="Name" type="text" value="<?php if(isset($name)) echo $name;?>"></dd>
@@ -77,7 +87,7 @@ if(empty($validationResult)){
 				<dt>Repeat Password: </dt>
 				<dd><input name="PasswordReapeat" type="password"></dd>
 			</dl>
-			<input name="submit" type="submit" value="submit">
+			<input name="submit" type="submit" value="sing up" class="btn btn-primary">
 		</form>
-	</body>
-</html>
+
+<?php include_once("../Private/shared/inout_footer.php") ?>

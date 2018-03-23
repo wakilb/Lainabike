@@ -6,7 +6,7 @@
     <meta charset="utf-8">
 	<meta name="author" content="wakil bouljoub">
     <link rel="stylesheet" media="all" href="<?php echo url_for('stylesheets/admin.css'); ?>" />
-	  <script src="https://use.fontawesome.com/54585300a1.js"></script>
+	<script src="https://use.fontawesome.com/54585300a1.js"></script>
   </head>
 
   <body>
